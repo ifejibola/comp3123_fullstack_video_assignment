@@ -1,0 +1,63 @@
+<div *ngIf="user.uid | async as  uid; else login">
+    The user is logged in. {{uid}}
+    <div *ngIf="user.isAdmin | async"> The user also has ADMIN super</div>
+    <div><button (click)="user.logout()">logout</button></div> 
+    <div>
+        <br>
+          <div>
+            <br>
+            <mat-card>
+                <section class="mat-typography">
+                  <h3>Update Video</h3>
+                </section>
+                <mat-divider></mat-divider>
+                <br>
+                <form [formGroup]="updateForm" class="edit-form">
+
+                  <mat-form-field class="field-full-width">
+                    <input matInput placeholder="Title" formControlName="Title" #Title>
+                  </mat-form-field>
+
+                  <mat-form-field class="field-full-width">
+                      <input matInput placeholder="RunTime" formControlName="RunTime" #RunTime>
+                  </mat-form-field>
+                  <mat-form-field class="field-full-width">
+                      <input matInput placeholder="Genre" formControlName="Genre" #Genre>
+                  </mat-form-field>
+
+                  <!-- create drop down list to select severity of the issue -->
+                  <mat-form-field>
+                    <mat-select placeholder="Rating" formControlName="Rating" #Rating>
+                      <mat-option value="1">1</mat-option>
+                      <mat-option value="2">2</mat-option>
+                      <mat-option value="3">3</mat-option>
+                      <mat-option value="4">4</mat-option>
+                      <mat-option value="5">5</mat-option>
+
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="field-full-width">
+                    <input matInput placeholder="Director" formControlName="Director" #Director>
+                  </mat-form-field>
+                  <!-- status -->
+                  <mat-form-field>
+                      <mat-select placeholder="Status" formControlName="Status" #Status>
+                        <mat-option value="Reserved">Reserved</mat-option>
+                        <mat-option value="Avaliable">Avaliable</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+
+                  <mat-divider></mat-divider>
+                  <br><br>
+                  <!-- Go back to list view without creating a new issue, incase user doesnt want to add issue to list anymore -->
+                  <button mat-raised-button color="accent" routerLink="/admin">Back</button>&nbsp;
+                  <button type="submit" (click)="updateVideo(Title.value, RunTime.value, Genre.value, Rating.value, Director.value, Status.value)"[disabled]=
+                    "updateForm.pristine || updateForm.invalid" mat-raised-button color="primary">Save</button>
+                </form>
+          </mat-card>
+        </div>
+    </div>
+</div>
+<ng-template #login>
+  You need to login: <button (click)="user.login()">Login</button>
+</ng-template>

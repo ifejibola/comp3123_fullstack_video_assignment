@@ -1,0 +1,62 @@
+<div *ngIf="user.uid | async as  uid; else login">
+    The user is logged in. {{uid}}
+    <div *ngIf="user.isAdmin | async"> The user also has ADMIN super</div>
+    <div><button (click)="user.logout()">logout</button></div> 
+    <div>
+        <br>
+        <!-- mat card is for layout, embeding list table content inside it -->
+        <mat-card>
+            <button mat-raised-button color="primary" routerLink="/create">Create New Issue</button>
+            <br><br>
+          <!-- mat-divider for creating a horizontal line for separation -->
+          <mat-divider></mat-divider>
+          <br>
+          <!-- Code for table to display all contents of the list and to add and delete from the table -->
+          <table mat-table [dataSource]="videos">
+            <!-- ng container is the columns -->
+            <ng-container matColumnDef="Title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td mat-cell *matCellDef="let element">{{element.Title}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="RunTime">
+              <th mat-header-cell *matHeaderCellDef>RunTime</th>
+              <td mat-cell *matCellDef="let element">{{element.RunTime}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Genre">
+                <th mat-header-cell *matHeaderCellDef>Genre</th>
+                <td mat-cell *matCellDef="let element">{{element.Genre}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="Rating">
+                <th mat-header-cell *matHeaderCellDef>Rating</th>
+                <td mat-cell *matCellDef="let element">{{element.Rating}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Director">
+              <th mat-header-cell *matHeaderCellDef>Director</th>
+              <td mat-cell *matCellDef="let element">{{element.Director}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Status">
+              <th mat-header-cell *matHeaderCellDef>Stat</th>
+              <td mat-cell *matCellDef="let element">{{element.Status}}</td>
+            </ng-container>
+            <!-- Add and delete button into this column -->
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+                <td mat-cell *matCellDef="let element" class="mat-column-right">
+                  <button mat-button color="primary" (click)="editVideo(element._id)">Edit</button>
+                  <button mat-button color="warn" (click)="deleteVideo(element._id)">Delete</button>
+                </td>
+            </ng-container>
+      
+            <!-- Rows -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <!-- makes sure all the conent is displayed for the row -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-card>
+      </div>   
+</div>
+  <ng-template #login>
+    You need to login: <button (click)="user.login()">Login</button>
+  </ng-template>

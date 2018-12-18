@@ -1,0 +1,8 @@
+table{
+    width: 100%;
+}
+
+/* .mat-column-right allows for edit and delete buttons to be centerd in its column out of place without this..  */
+.mat-column-right{
+    text-align: center;
+}
